@@ -49,6 +49,8 @@ async function run() {
       const result = await photoCollection.insertOne(service);
       res.send(result);
     });
+
+    //review get, post, delete part
     app.post("/myReviews", async (req, res) => {
       const review = req.body;
       const result = await myReviewsCollection.insertOne(review);
@@ -59,6 +61,13 @@ async function run() {
       const cursor = myReviewsCollection.find(query);
       const myReviews = await cursor.toArray();
       res.send(myReviews);
+    });
+
+    app.delete("/reviewDelete/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: ObjectId(id) };
+      const result = await myReviewsCollection.deleteOne(query);
+      res.send(result);
     });
   } finally {
   }

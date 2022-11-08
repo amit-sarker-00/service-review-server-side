@@ -35,6 +35,11 @@ async function run() {
       const service = await photoCollection.findOne(query);
       res.send(service);
     });
+    app.post("/addService", async (req, res) => {
+      const service = req.body;
+      const result = await photoCollection.insertOne(service);
+      res.send(result);
+    });
   } finally {
   }
 }

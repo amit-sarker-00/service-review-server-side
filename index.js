@@ -69,6 +69,13 @@ async function run() {
       const result = await myReviewsCollection.deleteOne(query);
       res.send(result);
     });
+
+    app.get("/reviews/:name", async (req, res) => {
+      const itemName = req.params.name;
+      const query = { itemName };
+      const result = await myReviewsCollection.find(query).toArray();
+      res.send(result);
+    });
   } finally {
   }
 }

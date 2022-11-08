@@ -20,6 +20,8 @@ const client = new MongoClient(uri, {
 async function run() {
   try {
     const photoCollection = client.db("wildLover").collection("services");
+    const latestCollection = client.db("wildLover").collection("latest");
+    const myReviewsCollection = client.db("wildLover").collection("myReviews");
 
     //get services
     app.get("/services", async (req, res) => {
@@ -35,10 +37,28 @@ async function run() {
       const service = await photoCollection.findOne(query);
       res.send(service);
     });
+    //get latest shot
+    app.get("/latest", async (req, res) => {
+      const query = {};
+      const cursor = latestCollection.find(query);
+      const latest = await cursor.toArray();
+      res.send(latest);
+    });
     app.post("/addService", async (req, res) => {
       const service = req.body;
       const result = await photoCollection.insertOne(service);
       res.send(result);
+    });
+    app.post("/myReviews", async (req, res) => {
+      const review = req.body;
+      const result = await myReviewsCollection.insertOne(review);
+      res.send(result);
+    });
+    app.get("/myReviews", async (req, res) => {
+      const query = {};
+      const cursor = myReviewsCollection.find(query);
+      const myReviews = await cursor.toArray();
+      res.send(myReviews);
     });
   } finally {
   }

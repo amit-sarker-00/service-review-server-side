@@ -9,3 +9,5 @@
 # create a .git ignore file and add node modules and .env file
 
 # jwt token added for security purposes
+
+# deploy to the vercel and added vercel config in the vercel.json file

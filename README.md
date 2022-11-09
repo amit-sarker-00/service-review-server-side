@@ -7,3 +7,5 @@
 # create a .env file to hide the secret key and the other thing
 
 # create a .git ignore file and add node modules and .env file
+
+# jwt token added for security purposes

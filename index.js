@@ -57,6 +57,12 @@ async function run() {
       const services = await cursor.toArray();
       res.send(services);
     });
+    app.get("/homeService", async (req, res) => {
+      const query = {};
+      const cursor = photoCollection.find(query);
+      const services = await cursor.limit(3).toArray();
+      res.send(services);
+    });
 
     app.get("/services/:id", async (req, res) => {
       const id = req.params.id;
@@ -126,11 +132,12 @@ async function run() {
       res.send(updateReview);
     });
 
-    app.put("/update/:id", async (req, res) => {
+    app.put("/editReview/:id", async (req, res) => {
       const id = req.params.id;
       const filter = { _id: ObjectId(id) };
       const update = req.body;
-      console.log(updateReview);
+      console.log(update);
+
       const option = { upsert: true };
       const updateReview = {
         $set: {
@@ -146,6 +153,7 @@ async function run() {
         updateReview,
         option
       );
+      console.log(result);
       res.send(result);
     });
   } finally {
